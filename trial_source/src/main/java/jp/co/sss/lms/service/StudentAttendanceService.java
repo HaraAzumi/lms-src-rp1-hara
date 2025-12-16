@@ -334,4 +334,35 @@ public class StudentAttendanceService {
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
 
+	/**
+	 * 勤怠情報（受講生入力）未入力件数取得
+	 * 
+	 * @return 勤怠情報（受講生入力）未入力件数
+	 */
+	public Integer notEnterCount() {
+
+		//LMSユーザーID
+		Integer lmsUserId = loginUserDto.getLmsUserId();
+		//削除フラグ
+		Short deleteFlg = 0;
+		//日付
+		Date trainingDate = new Date();
+		//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日(E)", Locale.JAPAN);
+		//		String trainingDateStr = sdf.format(trainingDate);
+
+		Short status = 0;
+		String trainingStartTime = null;
+		String trainingEndTime = null;
+
+		//勤怠情報（受講生入力）取得（LMSユーザーID＆日付）
+		//DBに登録されている自分の今日の勤怠情報(エンティティ)
+		//		TStudentAttendance trainingDateData = tStudentAttendanceMapper.findByLmsUserIdAndTrainingDate(lmsUserId,
+		//				trainingDate, deleteFlg);
+		//勤怠情報（受講生入力）未入力件数取得
+		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, trainingDate, deleteFlg, status,
+				trainingStartTime, trainingEndTime);
+
+		return notEnterCount;
+	}
+
 }
