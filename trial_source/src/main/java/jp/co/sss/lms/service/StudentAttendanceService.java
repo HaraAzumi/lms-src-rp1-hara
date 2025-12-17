@@ -342,11 +342,11 @@ public class StudentAttendanceService {
 	public Integer notEnterCount() {
 
 		//LMSユーザーID
-		Integer lmsUserId = loginUserDto.getLmsUserId();
+		Integer lmsUserId = loginUserDto.getLmsUserId(); //OK
 		//削除フラグ
 		Short deleteFlg = 0;
 		//日付
-		Date trainingDate = new Date();
+		Date trainingDate = new Date(); //OK
 		//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日(E)", Locale.JAPAN);
 		//		String trainingDateStr = sdf.format(trainingDate);
 
@@ -361,6 +361,9 @@ public class StudentAttendanceService {
 		//勤怠情報（受講生入力）未入力件数取得
 		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, trainingDate, deleteFlg, status,
 				trainingStartTime, trainingEndTime);
+
+		//		System.out.println("出勤…" + trainingStartTime);
+		//		System.out.println("勤怠の未入力数…" + notEnterCount);
 
 		return notEnterCount;
 	}
