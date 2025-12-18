@@ -359,7 +359,7 @@ public class StudentAttendanceService {
 		String trainingEndTime = studentAttendanceDto.getTrainingEndTime();
 
 		//勤怠情報（受講生入力）未入力件数取得
-		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, trainingDate, deleteFlg, status,
+		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, deleteFlg, trainingDate, status,
 				trainingStartTime, trainingEndTime) - 1;
 
 		return notEnterCount;

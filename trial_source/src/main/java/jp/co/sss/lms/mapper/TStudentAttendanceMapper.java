@@ -78,8 +78,7 @@ public interface TStudentAttendanceMapper {
 	 * @return 勤怠情報（受講生入力）未入力件数
 	 */
 	Integer notEnterCount(@Param("lmsUserId") Integer lmsUserId,
-			@Param("trainingDate") Date trainingDate, @Param("deleteFlg") Short deleteFlg,
-			@Param("status") Short status, @Param("trainingStartTime") String trainingStartTime,
-			@Param("trainingEndTime") String trainingEndTime);
+			@Param("deleteFlg") Short deleteFlg, @Param("trainingDate") Date trainingDate,
+			Short status, String trainingStartTime, String trainingEndTime);
 
 }
