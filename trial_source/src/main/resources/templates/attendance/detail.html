@@ -27,6 +27,8 @@
 	</th:block>
 
 	<th:block th:if="${session.loginUserDto.role == '0001'}">
+		
+		<!-- 原 杏美 – Task.25 -->
 		<script th:inline="javascript">
 			const notEnterCount = /*[[${notEnterCount}]]*/"notEnterCount";
 			
@@ -34,6 +36,7 @@
 				alert("過去日の勤怠に未入力があります。");
 			}
 		</script>
+		
 		<div class="well well-lg p10 mb10">
 			<div class="form-group">
 				<small id="now"></small>

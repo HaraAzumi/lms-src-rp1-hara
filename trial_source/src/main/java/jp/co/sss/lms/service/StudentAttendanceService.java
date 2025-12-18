@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
+import jp.co.sss.lms.dto.StudentAttendanceDto;
 import jp.co.sss.lms.entity.TStudentAttendance;
 import jp.co.sss.lms.enums.AttendanceStatusEnum;
 import jp.co.sss.lms.form.AttendanceForm;
@@ -41,6 +42,8 @@ public class StudentAttendanceService {
 	private LoginUserUtil loginUserUtil;
 	@Autowired
 	private LoginUserDto loginUserDto;
+	@Autowired
+	private StudentAttendanceDto studentAttendanceDto;
 	@Autowired
 	private TStudentAttendanceMapper tStudentAttendanceMapper;
 
@@ -337,33 +340,27 @@ public class StudentAttendanceService {
 	/**
 	 * 勤怠情報（受講生入力）未入力件数取得
 	 * 
+	 * @author 原 杏美 - Task.25
 	 * @return 勤怠情報（受講生入力）未入力件数
 	 */
 	public Integer notEnterCount() {
 
 		//LMSユーザーID
-		Integer lmsUserId = loginUserDto.getLmsUserId(); //OK
+		Integer lmsUserId = loginUserDto.getLmsUserId();
 		//削除フラグ
 		Short deleteFlg = 0;
 		//日付
-		Date trainingDate = new Date(); //OK
-		//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日(E)", Locale.JAPAN);
-		//		String trainingDateStr = sdf.format(trainingDate);
+		Date trainingDate = new Date();
+		//勤怠状態
+		Short status = studentAttendanceDto.getStatus();
+		//出勤時間
+		String trainingStartTime = studentAttendanceDto.getTrainingStartTime();
+		//退勤時間
+		String trainingEndTime = studentAttendanceDto.getTrainingEndTime();
 
-		Short status = 0;
-		String trainingStartTime = null;
-		String trainingEndTime = null;
-
-		//勤怠情報（受講生入力）取得（LMSユーザーID＆日付）
-		//DBに登録されている自分の今日の勤怠情報(エンティティ)
-		//		TStudentAttendance trainingDateData = tStudentAttendanceMapper.findByLmsUserIdAndTrainingDate(lmsUserId,
-		//				trainingDate, deleteFlg);
 		//勤怠情報（受講生入力）未入力件数取得
 		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, trainingDate, deleteFlg, status,
-				trainingStartTime, trainingEndTime);
-
-		//		System.out.println("出勤…" + trainingStartTime);
-		//		System.out.println("勤怠の未入力数…" + notEnterCount);
+				trainingStartTime, trainingEndTime) - 1;
 
 		return notEnterCount;
 	}
