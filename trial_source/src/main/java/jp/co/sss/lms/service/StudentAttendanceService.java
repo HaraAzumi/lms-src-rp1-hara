@@ -1,6 +1,7 @@
 package jp.co.sss.lms.service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -343,24 +344,22 @@ public class StudentAttendanceService {
 	 * @author 原 杏美 - Task.25
 	 * @return 勤怠情報（受講生入力）未入力件数
 	 */
-	public Integer notEnterCount() {
+	public Integer notEnterCount() throws ParseException {
 
 		//LMSユーザーID
 		Integer lmsUserId = loginUserDto.getLmsUserId();
 		//削除フラグ
 		Short deleteFlg = 0;
-		//日付
-		Date trainingDate = new Date();
-		//勤怠状態
-		Short status = studentAttendanceDto.getStatus();
-		//出勤時間
-		String trainingStartTime = studentAttendanceDto.getTrainingStartTime();
-		//退勤時間
-		String trainingEndTime = studentAttendanceDto.getTrainingEndTime();
+
+		//日付(Date→String)
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String trainingDateStr = sdf.format(today);
+		//日付(String→Date)
+		Date trainingDate = sdf.parse(trainingDateStr);
 
 		//勤怠情報（受講生入力）未入力件数取得
-		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, deleteFlg, trainingDate, status,
-				trainingStartTime, trainingEndTime) - 1;
+		Integer notEnterCount = tStudentAttendanceMapper.notEnterCount(lmsUserId, deleteFlg, trainingDate);
 
 		return notEnterCount;
 	}

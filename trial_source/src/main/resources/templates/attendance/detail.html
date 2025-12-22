@@ -30,9 +30,9 @@
 		
 		<!-- 原 杏美 – Task.25 -->
 		<script th:inline="javascript">
-			const notEnterCount = /*[[${notEnterCount}]]*/"notEnterCount";
+			const notEnterCountBoolean = /*[[${notEnterCountBoolean}]]*/"notEnterCountBoolean";
 			
-			if(notEnterCount > 0) {
+			if(notEnterCountBoolean == true) {
 				alert("過去日の勤怠に未入力があります。");
 			}
 		</script>
