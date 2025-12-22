@@ -56,6 +56,8 @@ public class AttendanceController {
 			model.addAttribute("notEnterCountBoolean", false);
 		}
 
+		// 原 杏美 – Task.26
+
 		return "attendance/detail";
 	}
 
