@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
-import jp.co.sss.lms.dto.StudentAttendanceDto;
 import jp.co.sss.lms.entity.TStudentAttendance;
 import jp.co.sss.lms.enums.AttendanceStatusEnum;
 import jp.co.sss.lms.form.AttendanceForm;
@@ -44,8 +43,6 @@ public class StudentAttendanceService {
 	@Autowired
 	private LoginUserDto loginUserDto;
 	@Autowired
-	private StudentAttendanceDto studentAttendanceDto;
-	@Autowired
 	private TStudentAttendanceMapper tStudentAttendanceMapper;
 
 	/**
@@ -73,6 +70,19 @@ public class StudentAttendanceService {
 				dto.setStatusDispName(statusEnum.name);
 			}
 		}
+
+		// 原 杏美 – Task.26
+		//		attendanceForm.setBlankTimes(attendanceUtil.setBlankTime());
+		//		attendanceForm.setHourMap(attendanceUtil.getHourMap());
+		//		attendanceForm.setMinuteMap(attendanceUtil.getMinuteMap());
+		//
+		//		for (List<DailyAttendanceForm> attendanceList : attendanceManagementDto) {
+		//
+		//			attendanceList.add(attendanceManagementDto.getTrainingStartTime(attendanceUtil.getHourMap()));
+		//			attendanceList.add(attendanceManagementDto.getTrainingStartTime(attendanceUtil.getMinuteMap()));
+		//			attendanceList.add(attendanceManagementDto.getTrainingEndTime(attendanceUtil.getHourMap()));
+		//			attendanceList.add(attendanceManagementDto.getTrainingEndTime(attendanceUtil.getMinuteMap()));
+		//		}
 
 		return attendanceManagementDtoList;
 	}
@@ -255,6 +265,10 @@ public class StudentAttendanceService {
 					.dateToString(attendanceManagementDto.getTrainingDate(), "yyyy年M月d日(E)"));
 			dailyAttendanceForm.setStatusDispName(attendanceManagementDto.getStatusDispName());
 
+			// 原 杏美 – Task.26
+			attendanceForm.setHourMap(attendanceUtil.getHourMap());
+			attendanceForm.setMinuteMap(attendanceUtil.getMinuteMap());
+
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
 		}
 
@@ -300,11 +314,45 @@ public class StudentAttendanceService {
 			// 出勤時刻整形
 			TrainingTime trainingStartTime = null;
 			trainingStartTime = new TrainingTime(dailyAttendanceForm.getTrainingStartTime());
-			tStudentAttendance.setTrainingStartTime(trainingStartTime.getFormattedString());
+			// 原 杏美 – Task.26
+			//			Integer startTimeHour = attendanceUtil.getHour(trainingStartTime);
+			//			Integer startTimeMinute = attendanceUtil.getMinute(trainingStartTime);
+
+			//			if (startTimeHour <= 9 && startTimeMinute <= 9) {
+			//				tStudentAttendance.setTrainingStartTime("0" + startTimeHour + ":0" + startTimeMinute);
+			//
+			//			} else if (startTimeHour <= 9) {
+			//				tStudentAttendance.setTrainingStartTime("0" + startTimeHour + ":" + startTimeMinute);
+			//
+			//			} else if (startTimeMinute <= 9) {
+			//				tStudentAttendance.setTrainingStartTime(startTimeHour + ":0" + startTimeMinute);
+			//
+			//			} else {
+			//				tStudentAttendance.setTrainingStartTime(startTimeHour + ":" + startTimeMinute);
+			//
+			//			}
+
 			// 退勤時刻整形
 			TrainingTime trainingEndTime = null;
 			trainingEndTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
-			tStudentAttendance.setTrainingEndTime(trainingEndTime.getFormattedString());
+			// 原 杏美 – Task.26
+			//			Integer endTimeHour = attendanceUtil.getHour(trainingEndTime);
+			//			Integer endTimeMinute = attendanceUtil.getMinute(trainingEndTime);
+			//
+			//			if (endTimeHour <= 9 && endTimeMinute <= 9) {
+			//				tStudentAttendance.setTrainingStartTime("0" + endTimeHour + ":0" + endTimeMinute);
+			//
+			//			} else if (endTimeHour <= 9) {
+			//				tStudentAttendance.setTrainingStartTime("0" + endTimeHour + ":" + endTimeMinute);
+			//
+			//			} else if (endTimeMinute <= 9) {
+			//				tStudentAttendance.setTrainingStartTime(endTimeHour + ":0" + endTimeMinute);
+			//
+			//			} else {
+			//				tStudentAttendance.setTrainingStartTime(endTimeHour + ":" + endTimeMinute);
+			//
+			//			}
+
 			// 中抜け時間
 			tStudentAttendance.setBlankTime(dailyAttendanceForm.getBlankTime());
 			// 遅刻早退ステータス

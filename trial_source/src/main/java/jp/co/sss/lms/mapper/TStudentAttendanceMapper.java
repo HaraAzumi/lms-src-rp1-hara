@@ -70,11 +70,8 @@ public interface TStudentAttendanceMapper {
 	 * 
 	 * @author 原 杏美 - Task.25
 	 * @param lmsUserId
-	 * @param trainingDate
 	 * @param deleteFlg
-	 * @param status
-	 * @param trainingStartTime
-	 * @param trainingEndTime
+	 * @param trainingDate
 	 * @return 勤怠情報（受講生入力）未入力件数
 	 */
 	Integer notEnterCount(@Param("lmsUserId") Integer lmsUserId,

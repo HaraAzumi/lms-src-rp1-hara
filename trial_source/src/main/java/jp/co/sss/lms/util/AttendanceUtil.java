@@ -133,6 +133,95 @@ public class AttendanceUtil {
 	}
 
 	/**
+	 * 時間のプルダウンマップを生成
+	 * 
+	 * @return 時間のプルダウンマップ
+	 */
+	public LinkedHashMap<Integer, String> getHourMap() {
+
+		LinkedHashMap<Integer, String> hourMap = new LinkedHashMap<>();
+		hourMap.put(null, "");
+
+		for (int i = 0; i < 24; i++) {
+			int hour = i;
+			String time = hour + "";
+
+			hourMap.put(i, time);
+
+		}
+		return hourMap;
+
+	}
+
+	/**
+	 * 分のプルダウンマップを生成
+	 * 
+	 * @return 分のプルダウンマップ
+	 */
+	public LinkedHashMap<Integer, String> getMinuteMap() {
+
+		LinkedHashMap<Integer, String> minuteMap = new LinkedHashMap<>();
+		minuteMap.put(null, "");
+
+		for (int i = 0; i < 60; i++) {
+			int minute = i;
+			String time = minute + "";
+
+			minuteMap.put(i, time);
+
+		}
+		return minuteMap;
+
+	}
+
+	/**
+	 * 時間(時)の切り出し
+	 * 
+	 * @param trainingStartTime
+	 * @return 時間(時)
+	 */
+	public Integer getHour(String trainingStartTime) {
+
+		String hourStr;
+
+		if (trainingStartTime.isEmpty()) {
+			hourStr = null;
+
+		} else {
+			hourStr = trainingStartTime.substring(0, 2);
+
+		}
+
+		Integer hour = Integer.parseInt(hourStr);
+
+		return hour;
+	}
+
+	/**
+	 * 時間(分)の切り出し
+	 * 
+	 * @param trainingStartTime
+	 * @return 時間(分)
+	 */
+	public Integer getMinute(String trainingStartTime) {
+
+		String minuteStr;
+		int length = trainingStartTime.length();
+
+		if (trainingStartTime.isEmpty()) {
+			minuteStr = null;
+
+		} else {
+			minuteStr = trainingStartTime.substring(length - 2);
+
+		}
+
+		Integer minute = Integer.parseInt(minuteStr);
+
+		return minute;
+	}
+
+	/**
 	 * 研修日の判定
 	 * 
 	 * @param courseId
